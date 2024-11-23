@@ -30,7 +30,7 @@ exports.signup = async (req, res) => {
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({ errors });
     }
-    
+
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ error: 'Username already exists' });
@@ -61,6 +61,13 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    if (!username || typeof username !== 'string' || !username.trim()) {
+      return res.status(400).json({ error: 'Username cannot be empty. Please enter your username.' });
+    }
+    if (!password || typeof password!== 'string' ||!password.trim()) {
+      return res.status(400).json({ error: 'Password cannot be empty. Please enter your password' });
+    }
 
     const user = await User.findOne({ username });
     if (!user) {
