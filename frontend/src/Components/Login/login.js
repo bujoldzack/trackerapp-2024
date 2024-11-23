@@ -73,12 +73,31 @@ const LoginStyled = styled.div`
 const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
 
+  const validateInputs = () => {
+    const newErrors = {};
+
+    if (!username.trim()) {
+      newErrors.username = 'Username not found.';
+    }
+
+    if (!password || password.length < 8) {
+      newErrors.password = 'Wrong Password, please try again.';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!validateInputs()) return;
+
     try {
       const response = await axios.post('http://localhost:5000/api/v1/auth/login', {
         username,
@@ -113,8 +132,8 @@ const Login = ({ onLoginSuccess }) => {
             id="username"
             value={username}
             onChange={(event) => setUsername(event.target.value)}
-            required
           />
+          {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
         </div>
         <div className="form-group">
           <label htmlFor="password">Password:</label>
@@ -123,8 +142,8 @@ const Login = ({ onLoginSuccess }) => {
             id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            required
           />
+          {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
         </div>
         <div className="submit-btn">
           <button
