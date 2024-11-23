@@ -89,9 +89,8 @@ const Register = ({ onRegisterSuccess }) => {
 
     if (!username.trim()) {
       newErrors.username = 'Username is required.';
-    } else if (username.length < 5) {
-      newErrors.username = 'Username must be at least 5 characters long.';
-    } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+    }
+    else if(!/^[a-zA-Z0-9]+$/.test(username)) {
       newErrors.username = 'Username can only contain letters and numbers.';
     }
 
