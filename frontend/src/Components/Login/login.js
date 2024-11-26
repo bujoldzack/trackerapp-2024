@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { loginRoute } from '../../utils/APIRoutes';
 
 const LoginStyled = styled.div`
   display: flex;
@@ -99,7 +100,7 @@ const Login = ({ onLoginSuccess }) => {
     if (!validateInputs()) return;
 
     try {
-      const response = await axios.post('http://localhost:5000/api/v1/auth/login', {
+      const response = await axios.post(loginRoute, {
         username,
         password,
       });
