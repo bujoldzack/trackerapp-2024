@@ -14,6 +14,8 @@ app.use(express.json())
 app.use(cors())
 app.use('/api/v1/auth', authRoutes)
 
+app.use(express.static(path.join(__dirname, 'build')));
+
 //routes
 readdirSync('./routes').map((route) => {
     if (route !== 'auth.js') app.use('/api/v1', require('./routes/' + route))
