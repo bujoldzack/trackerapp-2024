@@ -1,12 +1,45 @@
 #!/bin/bash
+
 set -e
 
-cd ../frontend/
+ 
+
+cd ../frontend
+
+ 
+
 npm install
+
+ 
+
+echo "Building frontend..."
+
 npm run build
+
+ 
+
 rm -rf ../backend/react-build || true
-cp -r build/ ../backend/react-build
+
+ 
+
+cp -r build ../backend/react-build/
+
+ 
+
 rm -rf build/
+
+ 
+
 cd ../backend
+
+ 
+
 rm full.zip || true
-7z a -tzip full.zip . -xr!node_modules -x!.env
+
+ 
+
+zip -r full.zip . -x "node_modules/*" -x ".env/*"
+
+ 
+
+echo "Zip creation complete."

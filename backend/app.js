@@ -17,6 +17,9 @@ app.use(express.static(path.join(__dirname, 'react-build')));
 const authRoutes = require('./routes/auth');
 app.use('/api/v1/auth', authRoutes);
 
+// deploy
+app.use(express.static(path.join(__dirname, 'build')));
+
 readdirSync('./routes').map((route) => {
   if (route !== 'auth.js') app.use('/api/v1', require('./routes/' + route));
 });
